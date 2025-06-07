@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Revisão de Artigos - IA Click</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <h1>Revisão de Artigos Gerados pela IA</h1>
+    <button onclick="logout()">Logout</button>
+
+    <div id="articles"></div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/articles.js"></script>
+    <script>
+        if (!isAuthenticated()) {
+            window.location.href = 'login.html';
+        } else {
+            loadArticles();
+        }
+    </script>
+</body>
+</html>
