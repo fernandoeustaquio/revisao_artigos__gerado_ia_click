@@ -1,4 +1,6 @@
-function login(event) {
+import { LAMBDA_API_URL } from './config.js';
+
+export function login(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -19,15 +21,15 @@ function login(event) {
     });
 }
 
-function isAuthenticated() {
+export function isAuthenticated() {
     return !!localStorage.getItem('token');
 }
 
-function logout() {
+export function logout() {
     localStorage.removeItem('token');
     window.location.href = 'login.html';
 }
 
-function getToken() {
+export function getToken() {
     return localStorage.getItem('token');
 }

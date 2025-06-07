@@ -1,10 +1,16 @@
-function loadArticles() {
-    fetch('https://SEU_BACKEND_URL/artigos/pending', {
+import { LAMBDA_API_URL } from './config.js';
+import { getToken } from './auth.js';
+
+export function loadArticles() {
+    fetch(`${LAMBDA_API_URL}/artigos/pending`, {
         headers: {
             'Authorization': 'Bearer ' + getToken()
         }
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) throw new Error('Erro ao carregar artigos');
+        return res.json();
+    })
     .then(data => {
         const container = document.getElementById('articles');
         container.innerHTML = '';
@@ -21,11 +27,14 @@ function loadArticles() {
             `;
             container.appendChild(div);
         });
+    })
+    .catch(err => {
+        alert('Erro: ' + err.message);
     });
 }
 
-function approveArticle(id) {
-    fetch(`https://SEU_BACKEND_URL/artigos/${id}/approve`, {
+export function approveArticle(id) {
+    fetch(`${LAMBDA_API_URL}/artigos/${id}/approve`, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + getToken()
@@ -33,8 +42,8 @@ function approveArticle(id) {
     }).then(() => loadArticles());
 }
 
-function rejectArticle(id) {
-    fetch(`https://SEU_BACKEND_URL/artigos/${id}/reject`, {
+export function rejectArticle(id) {
+    fetch(`${LAMBDA_API_URL}/artigos/${id}/reject`, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + getToken()
